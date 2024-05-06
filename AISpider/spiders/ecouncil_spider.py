@@ -26,12 +26,13 @@ class EcouncilSpider(scrapy.Spider):
         # 'DOWNLOAD_TIMEOUT': 1200
     }
 
-    def __init__(self,run_type=None,days=None,*args, **kwargs):
+    def __init__(self,category=None,run_type=None,days=None,*args, **kwargs):
         self.headers = {
             'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
             'accept-language': 'zh-CN,zh;q=0.9',
         }
         self.run_type = run_type
+        self.category = category
         if days == None:
         # 如果没有传days默认为这个月的数据
             self.days = get_this_month()
@@ -84,7 +85,7 @@ class EcouncilSpider(scrapy.Spider):
             'searchMode': 'A',
             'submitButton': 'Search'
         }
-        if self.run_type == 'fisrt':
+        if self.category == 'fisrt':
             search_response_url = 'https://ecouncil.bayside.vic.gov.au/eservice/daEnquiry.do?'
             data= ''
             for d in paylods1:
@@ -93,7 +94,7 @@ class EcouncilSpider(scrapy.Spider):
             data = data.strip("&")
             search_response_url = search_response_url +data
             yield Request(url=search_response_url,callback=self.parse_search,method='GET',headers=self.headers,dont_filter=False)
-        elif self.run_type == 'second':
+        elif self.category == 'second':
             search_response_url = 'https://ecouncil.bayside.vic.gov.au/eservice/daEnquiry.do?'
             data = ''
             for d in paylods2:
