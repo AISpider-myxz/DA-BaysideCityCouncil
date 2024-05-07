@@ -85,7 +85,7 @@ class EcouncilSpider(scrapy.Spider):
             'searchMode': 'A',
             'submitButton': 'Search'
         }
-        if self.category == 'fisrt':
+        if self.category == 'first':
             search_response_url = 'https://ecouncil.bayside.vic.gov.au/eservice/daEnquiry.do?'
             data= ''
             for d in paylods1:
